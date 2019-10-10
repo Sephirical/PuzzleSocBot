@@ -1,0 +1,10 @@
+{
+  "name": "PuzzleBot-1000",
+  "version": "1.0.0",
+  "description": "aaaaaaaaaaaaaaaaaaa",
+  "main": "bot.js",
+  "author": "Sephirical",
+  "dependencies": {
+    "discord.js": "^11.5.1"
+  }
+}
