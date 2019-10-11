@@ -12,12 +12,12 @@ client.on('message', msg => {
   var user = msg.author;
   if (puzzle === 'cryptic') {
 	if (msg.content.toLowerCase() === curr_puzzle.answer) {
-	  msg.channel.bulkDelete(1);
+	  //msg.channel.bulkDelete(1);
 	  msg.channel.send(`${user} has gotten the correct answer!`);
 	  puzzle = 'none';
 	} else {
 	  if (user.bot === false) {
-		msg.channel.bulkDelete(1);
+		//msg.channel.bulkDelete(1);
 		msg.channel.send(`${user} was incorrect! Try again.`);
       }
 	}
