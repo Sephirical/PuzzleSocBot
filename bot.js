@@ -89,10 +89,17 @@ client.on('message', msg => {
       None.");
     } else if (msg.content === '-rebus' && puzzle === 'none') {
       msg.reply("my head hurts... I'll get back to you on that.");
-    } else if (msg.content.match(/^!a+$/)) {
-      var new_aaa = msg.content.replace(/!/, '');
+    } else if (msg.content.match(/^-a+$/)) {
+      var new_aaa = msg.content.replace(/-/, '');
       msg.channel.send(new_aaa);
-    } else if (msg.content === '-reset') {
+    } else if (msg.content.match(/^-a\d\d?/)) {
+      var num_aaa = msg.content.replace(/-a/, '');
+      var new_aaa = "";
+      for (i = 0; i < num_aaa; i++) {
+        new_aaa += 'a';
+      }
+      msg.channel.send(new_aaa);
+    } else if (msg.content === '-reset' && msg.member.hasPermission("ADMINISTRATOR")) {
       if (puzzle === 'none') {
         msg.reply("there is no puzzle running right now!");
       } else {
