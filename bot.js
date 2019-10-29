@@ -3,7 +3,7 @@ const client = new Discord.Client();
 const auth = require('./auth.json');
 const fs = require('fs');
 const cryptics = require('./cryptic.json');
-var players = JSON.parse(fs.readFileSync('stats.json'));
+var players = JSON.parse(fs.readFileSync('./stats.json'));
 var puzzle = 'none';
 var curr_puzzle;
 var points_left = 3.0;
@@ -20,7 +20,6 @@ client.on('message', msg => {
       if (msg.content.toLowerCase() === curr_puzzle.answer) {
         msg.channel.send("Correct!");
         if (!players[user.id]) players[user.id] = {
-          "id":user.id,
           "picarats":0.0,
           "firsts":0,
           "seconds":0,
@@ -53,16 +52,8 @@ client.on('message', msg => {
             players[user.id].other++;
         }
         //console.log(`${Object.keys(players).length}`);
-        var newjson = "[ ";
-        for (i = 0; i < Object.keys(players).length; i++) {
-          newjson += JSON.stringify(players[Object.keys(players)[i]]);
-          if (i == Object.keys(players).length - 1) {
-            newjson += " ]";
-          } else {
-            newjson += ", ";
-          }
-        }
-        fs.writeFile('stats.json', newjson, (err) => {
+        
+        fs.writeFile('./stats.json', JSON.stringify(players), (err) => {
           if (err) console.error(err);
         });
         //console.log(`${Object.keys(players).length}`);
@@ -110,7 +101,7 @@ client.on('message', msg => {
         players_submitted = [];
         msg.reply("I've reset the puzzle!");
       }
-    } else if (msg.content === '-cryptic' && puzzle === 'cryptic') {
+    } else if (msg.content === '-cryptic' && puzzle === 'cryptic' && msg.member.hasPermission("ADMINISTRATOR")) {
       msg.reply(`the current cryptic is: ${curr_puzzle.cryptic}`);
     } else if (msg.content.startsWith('-sleep')) {
         //const attachment = new Discord.MessageAttachment('./sleep.gif');
@@ -130,9 +121,12 @@ client.on('message', msg => {
       if (!players[user.id]) {
         msg.reply("you haven't participated in a puzzle yet!");
       } else {
-        //msg.reply(`you have ${players[user.id].picarats} picarats!`);
-        var yes = JSON.stringify(players);
-        msg.reply(`${yes}`);
+        msg.reply(`you have ${players[user.id].picarats} picarats! \n \
+        First place finishes: ${players[user.id].firsts} \n \
+        Second place finishes: ${players[user.id].seconds} \n \
+        Third place finishes: ${players[user.id].thirds} \n \
+        Fourth or lower finishes: ${players[user.id].other}`);
+        
       }
     }
   }
