@@ -51,12 +51,10 @@ client.on('message', msg => {
             players[user.id].picarats += 0.5;
             players[user.id].other++;
         }
-        //console.log(`${Object.keys(players).length}`);
         
         fs.writeFile('./stats.json', JSON.stringify(players), (err) => {
           if (err) console.error(err);
         });
-        //console.log(`${Object.keys(players).length}`);
       } else {
         msg.channel.send(`${user} was incorrect! Try again.`);
       }
@@ -111,9 +109,6 @@ client.on('message', msg => {
     } else if (msg.content === '-cryptic' && puzzle === 'cryptic' && msg.member.hasPermission("ADMINISTRATOR")) {
       msg.reply(`the current cryptic is: ${curr_puzzle.cryptic}`);
     } else if (msg.content.startsWith('-sleep')) {
-        //const attachment = new Discord.MessageAttachment('./sleep.gif');
-        //msg.channel.send(attachment);
-        //message.channel.send("Hey, ", {files: ["https://pa1.narvii.com/6559/82632842ac51f65e88c34d54257d0d13dd257ccd_128.gif"]});
         var users = msg.mentions.users.array();
         if (users.length == 0) {
           msg.channel.send(``, {files: ["sleep.gif"]});
